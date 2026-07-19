@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlaqAnime Hub — Watch & Download Anime, Uncut</title>
+<meta name="description" content="BlaqAnime Hub is a free anime streaming and download destination — HD quality, daily uploads, zero fluff.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0d;
+    --panel:#131217;
+    --panel-line:#2a2833;
+    --violet:#7c3aed;
+    --pink:#ff2d78;
+    --gold:#f5c242;
+    --bone:#f2f0ea;
+    --bone-dim:#a9a6b3;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'Manrope', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:var(--body);
+    overflow-x:hidden;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  :focus-visible{
+    outline:3px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(10,10,13,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--panel-line);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 24px;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .logo{
+    font-family:var(--display);
+    font-size:28px;
+    letter-spacing:1px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo span{ color:var(--pink); }
+  .logo::before{
+    content:'';
+    display:inline-block;
+    width:10px; height:10px;
+    background:var(--gold);
+    transform:rotate(45deg);
+  }
+  .nav-links{
+    display:flex;
+    gap:32px;
+    font-weight:700;
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+  .nav-links a{
+    position:relative;
+    padding:4px 0;
+    color:var(--bone-dim);
+    transition:color .2s ease;
+  }
+  .nav-links a:hover{ color:var(--bone); }
+  .nav-links a::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:-4px;
+    width:0; height:2px;
+    background:var(--pink);
+    transition:width .25s ease;
+  }
+  .nav-links a:hover::after{ width:100%; }
+
+  .nav-actions{ display:flex; gap:12px; align-items:center; }
+  .btn{
+    font-family:var(--body);
+    font-weight:800;
+    font-size:14px;
+    padding:10px 20px;
+    border-radius:2px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+    display:inline-block;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{
+    background:var(--pink);
+    color:var(--ink);
+    box-shadow:4px 4px 0 var(--gold);
+  }
+  .btn-primary:hover{ box-shadow:6px 6px 0 var(--gold); }
+  .btn-ghost{
+    background:transparent;
+    color:var(--bone);
+    border-color:var(--panel-line);
+  }
+  .btn-ghost:hover{ border-color:var(--bone); }
+
+  .menu-toggle{ display:none; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:100px 24px 80px;
+    text-align:center;
+    overflow:hidden;
+    background:
+      repeating-linear-gradient(
+        115deg,
+        transparent 0px,
+        transparent 38px,
+        rgba(124,58,237,0.07) 39px,
+        rgba(124,58,237,0.07) 41px
+      );
+  }
+  .hero::before, .hero::after{
+    content:'';
+    position:absolute;
+    border-radius:50%;
+    filter:blur(90px);
+    opacity:0.35;
+    z-index:0;
+  }
+  .hero::before{
+    width:420px; height:420px;
+    background:var(--violet);
+    top:-140px; left:-100px;
+  }
+  .hero::after{
+    width:380px; height:380px;
+    background:var(--pink);
+    bottom:-160px; right:-80px;
+  }
+  .hero-inner{ position:relative; z-index:1; }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:13px;
+    letter-spacing:1px;
+    color:var(--gold);
+    border:1px solid var(--panel-line);
+    padding:6px 14px;
+    border-radius:100px;
+    margin-bottom:28px;
+  }
+  .eyebrow::before{ content:'●'; color:var(--pink); font-size:9px; }
+
+  h1{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:clamp(48px, 9vw, 108px);
+    line-height:0.95;
+    letter-spacing:1px;
+    text-transform:uppercase;
+  }
+  h1 .accent{ color:var(--pink); }
+  h1 .accent2{ -webkit-text-stroke:2px var(--violet); color:transparent; }
+
+  .hero-sub{
+    max-width:560px;
+    margin:26px auto 40px;
+    color:var(--bone-dim);
+    font-size:17px;
+    line-height:1.6;
+  }
+
+  .hero-ctas{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-bottom:56px;
+  }
+  .hero-ctas .btn{ font-size:16px; padding:14px 28px; }
+
+  .stat-strip{
+    display:flex;
+    justify-content:center;
+    gap:0;
+    flex-wrap:wrap;
+    border-top:1px solid var(--panel-line);
+    border-bottom:1px solid var(--panel-line);
+    padding:28px 0;
+  }
+  .stat{
+    padding:0 36px;
+    border-right:1px solid var(--panel-line);
+    text-align:center;
+  }
+  .stat:last-child{ border-right:none; }
+  .stat-num{
+    font-family:var(--display);
+    font-size:36px;
+    color:var(--gold);
+    display:block;
+  }
+  .stat-label{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--bone-dim);
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+
+  /* ---------- SECTION HEAD ---------- */
+  .section{ padding:96px 24px; }
+  .section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:48px;
+    flex-wrap:wrap;
+  }
+  .section-tag{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--pink);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    margin-bottom:8px;
+    display:block;
+  }
+  .section-head h2{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:clamp(32px, 5vw, 52px);
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+  .section-head p{
+    max-width:340px;
+    color:var(--bone-dim);
+    font-size:15px;
+    line-height:1.6;
+  }
+
+  /* ---------- PANEL GRID (signature) ---------- */
+  .panel-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    grid-template-rows:repeat(2,220px);
+    gap:3px;
+    background:var(--panel-line);
+    border:3px solid var(--bone);
+  }
+  .panel{
+    background:var(--panel);
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    position:relative;
+    overflow:hidden;
+    transition:transform .2s ease;
+  }
+  .panel:hover{ transform:scale(1.02); z-index:2; }
+  .panel::before{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(160deg, transparent 40%, rgba(0,0,0,0.6));
+  }
+  .panel-icon{
+    font-size:30px;
+    margin-bottom:12px;
+    position:relative; z-index:1;
+  }
+  .panel h3{
+    font-family:var(--display);
+    font-size:22px;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    position:relative; z-index:1;
+  }
+  .panel p{
+    font-size:13px;
+    color:var(--bone-dim);
+    position:relative; z-index:1;
+    margin-top:6px;
+  }
+  .p-wide{ grid-column:span 3; }
+  .p-narrow{ grid-column:span 2; }
+  .p-tall{ grid-row:span 2; }
+  .p-violet{ background:linear-gradient(135deg, var(--violet), #4c1d95); }
+  .p-pink{ background:linear-gradient(135deg, var(--pink), #7a1439); }
+  .p-gold{ background:var(--panel); border-left:3px solid var(--gold); }
+
+  /* ---------- TRENDING STRIP ---------- */
+  .strip-scroll{
+    display:flex;
+    gap:16px;
+    overflow-x:auto;
+    padding-bottom:16px;
+    scrollbar-width:thin;
+    scrollbar-color:var(--violet) var(--panel);
+  }
+  .strip-scroll::-webkit-scrollbar{ height:8px; }
+  .strip-scroll::-webkit-scrollbar-track{ background:var(--panel); }
+  .strip-scroll::-webkit-scrollbar-thumb{ background:var(--violet); border-radius:4px; }
+
+  .card{
+    flex:0 0 220px;
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    position:relative;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .card:hover{ border-color:var(--pink); transform:translateY(-6px); }
+  .card-art{
+    height:280px;
+    background:linear-gradient(150deg, var(--violet), var(--pink));
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    padding:14px;
+  }
+  .card-tag{
+    font-family:var(--mono);
+    font-size:11px;
+    background:var(--ink);
+    color:var(--gold);
+    padding:3px 8px;
+    border-radius:2px;
+  }
+  .card-ep{
+    position:absolute;
+    top:12px; right:12px;
+    font-family:var(--mono);
+    font-size:11px;
+    background:rgba(10,10,13,0.7);
+    padding:3px 8px;
+    border-radius:2px;
+  }
+  .card-body{ padding:14px; }
+  .card-body h4{
+    font-family:var(--display);
+    font-size:19px;
+    letter-spacing:0.5px;
+    margin-bottom:4px;
+  }
+  .card-body span{
+    font-size:12px;
+    color:var(--bone-dim);
+  }
+
+  /* ---------- CTA ---------- */
+  .cta{
+    text-align:center;
+    padding:100px 24px;
+    background:var(--panel);
+    border-top:1px solid var(--panel-line);
+    border-bottom:1px solid var(--panel-line);
+    position:relative;
+  }
+  .cta h2{
+    font-family:var(--display);
+    font-size:clamp(36px,6vw,64px);
+    text-transform:uppercase;
+    line-height:1;
+    margin-bottom:20px;
+  }
+  .cta p{ color:var(--bone-dim); margin-bottom:32px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:48px 24px 32px; }
+  .footer-grid{
+    display:flex;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-bottom:32px;
+  }
+  .footer-col h5{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:14px;
+  }
+  .footer-col a{
+    display:block;
+    color:var(--bone-dim);
+    font-size:14px;
+    margin-bottom:10px;
+    transition:color .2s ease;
+  }
+  .footer-col a:hover{ color:var(--bone); }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    padding-top:24px;
+    border-top:1px solid var(--panel-line);
+    font-size:13px;
+    color:var(--bone-dim);
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:860px){
+    .nav-links{ display:none; }
+    .panel-grid{
+      grid-template-columns:repeat(2,1fr);
+      grid-template-rows:auto;
+    }
+    .p-wide, .p-narrow, .p-tall{ grid-column:span 2; grid-row:span 1; min-height:180px; }
+    .stat{ padding:0 18px; }
+  }
+  @media (max-width:520px){
+    .stat-strip{ flex-direction:column; gap:16px; }
+    .stat{ border-right:none; border-bottom:1px solid var(--panel-line); padding-bottom:16px; }
+    .stat:last-child{ border-bottom:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#top" class="logo">BLAQ<span>ANIME</span></a>
+    <ul class="nav-links">
+      <li><a href="#browse">Browse</a></li>
+      <li><a href="#trending">Trending</a></li>
+      <li><a href="#about">Why Us</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#" class="btn btn-ghost">Sign In</a>
+      <a href="#" class="btn btn-primary">Join Free</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <span class="eyebrow">STREAMING NOW · NO PAYWALL</span>
+    <h1>Your next<br><span class="accent">binge</span> starts <span class="accent2">here</span></h1>
+    <p class="hero-sub">BlaqAnime Hub is where the culture watches — sub, dub, and download,
+      every release day, zero nonsense in between.</p>
+    <div class="hero-ctas">
+      <a href="#" class="btn btn-primary">Start Watching Free</a>
+      <a href="#browse" class="btn btn-ghost">Browse the Library</a>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat"><span class="stat-num">20K+</span><span class="stat-label">Titles</span></div>
+      <div class="stat"><span class="stat-num">1080p</span><span class="stat-label">HD Streams</span></div>
+      <div class="stat"><span class="stat-num">Daily</span><span class="stat-label">New Episodes</span></div>
+      <div class="stat"><span class="stat-num">Free</span><span class="stat-label">Forever Tier</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">Panel 01 — Why Us</span>
+        <h2>Built like the shows<br>you actually watch</h2>
+      </div>
+      <p>No autoplay ads mid-fight scene. No burying downloads behind five clicks. Just the anime.</p>
+    </div>
+
+    <div class="panel-grid">
+      <div class="panel p-wide p-violet">
+        <div class="panel-icon">⚡</div>
+        <h3>Zero Buffer Policy</h3>
+        <p>Adaptive HD streaming that keeps up with your connection, not the other way around.</p>
+      </div>
+      <div class="panel p-narrow">
+        <div class="panel-icon">🗂️</div>
+        <h3>Offline Downloads</h3>
+        <p>Grab episodes in one tap, watch on the train, the plane, anywhere.</p>
+      </div>
+      <div class="panel p-narrow p-tall p-pink">
+        <div class="panel-icon">🎙️</div>
+        <h3>Sub &amp; Dub</h3>
+        <p>Every simulcast lands with subtitles day one. Dubs follow fast.</p>
+      </div>
+      <div class="panel p-narrow p-gold">
+        <div class="panel-icon">📅</div>
+        <h3>Release Tracker</h3>
+        <p>Follow a series, get pinged the second a new episode drops.</p>
+      </div>
+      <div class="panel p-wide">
+        <div class="panel-icon">🌍</div>
+        <h3>Built For The Community</h3>
+        <p>Requests, ratings, and discussion threads run by people who actually watch this stuff.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="trending">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">Panel 02 — Trending</span>
+        <h2>What the hub's<br>watching this week</h2>
+      </div>
+      <p>Updated every Monday based on streams, not sponsorships.</p>
+    </div>
+
+    <div class="strip-scroll" id="browse">
+      <div class="card">
+        <div class="card-art"><span class="card-tag">ACTION</span><span class="card-ep">EP 12</span></div>
+        <div class="card-body"><h4>Iron Requiem</h4><span>Season 2 · Sub &amp; Dub</span></div>
+      </div>
+      <div class="card">
+        <div class="card-art" style="background:linear-gradient(150deg,#F5C242,#FF2D78)"><span class="card-tag">FANTASY</span><span class="card-ep">EP 04</span></div>
+        <div class="card-body"><h4>Nine Moons Over Kael</h4><span>Season 1 · Sub</span></div>
+      </div>
+      <div class="card">
+        <div class="card-art" style="background:linear-gradient(150deg,#7c3aed,#131217)"><span class="card-tag">MECHA</span><span class="card-ep">EP 21</span></div>
+        <div class="card-body"><h4>Voidframe Zero</h4><span>Season 3 · Dub</span></div>
+      </div>
+      <div class="card">
+        <div class="card-art" style="background:linear-gradient(150deg,#FF2D78,#4c1d95)"><span class="card-tag">DRAMA</span><span class="card-ep">EP 08</span></div>
+        <div class="card-body"><h4>Lagos After Midnight</h4><span>Season 1 · Sub</span></div>
+      </div>
+      <div class="card">
+        <div class="card-art" style="background:linear-gradient(150deg,#131217,#F5C242)"><span class="card-tag">COMEDY</span><span class="card-ep">EP 15</span></div>
+        <div class="card-body"><h4>Class 3-B Chaos</h4><span>Season 2 · Dub</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Stop Waiting. Start Watching.</h2>
+    <p>Create a free account in under a minute — no card required.</p>
+    <a href="#" class="btn btn-primary">Join BlaqAnime Hub</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <a href="#browse">Browse Library</a>
+        <a href="#trending">Trending</a>
+        <a href="#">New Releases</a>
+      </div>
+      <div class="footer-col">
+        <h5>Account</h5>
+        <a href="#">Sign In</a>
+        <a href="#">Join Free</a>
+        <a href="#">My List</a>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <a href="#">Help Center</a>
+        <a href="#">Contact</a>
+        <a href="#">Report an Issue</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 BlaqAnime Hub. All rights reserved.</span>
+      <span>Made for the culture.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
