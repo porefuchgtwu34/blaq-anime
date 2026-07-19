@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — BlaqAnime Hub</title>
+<meta name="description" content="Sign in or join BlaqAnime Hub free to start streaming and downloading anime in HD.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0d;
+    --panel:#131217;
+    --panel-line:#2a2833;
+    --violet:#7c3aed;
+    --pink:#ff2d78;
+    --gold:#f5c242;
+    --bone:#f2f0ea;
+    --bone-dim:#a9a6b3;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'Manrope', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:var(--ink); color:var(--bone); font-family:var(--body); min-height:100vh; }
+  a{ color:inherit; text-decoration:none; }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+  :focus-visible{ outline:3px solid var(--gold); outline-offset:3px; }
+
+  .split{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    min-height:100vh;
+  }
+
+  /* ---------- LEFT: VISUAL PANEL ---------- */
+  .visual{
+    position:relative;
+    overflow:hidden;
+    background:
+      repeating-linear-gradient(115deg, transparent 0px, transparent 38px, rgba(124,58,237,0.12) 39px, rgba(124,58,237,0.12) 41px),
+      linear-gradient(160deg, #1c1730, var(--ink) 60%);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:48px;
+  }
+  .visual::before, .visual::after{
+    content:''; position:absolute; border-radius:50%; filter:blur(100px); opacity:0.4; z-index:0;
+  }
+  .visual::before{ width:380px; height:380px; background:var(--violet); top:-120px; left:-80px; }
+  .visual::after{ width:340px; height:340px; background:var(--pink); bottom:-140px; right:-60px; }
+
+  .logo{ font-family:var(--display); font-size:28px; letter-spacing:1px; display:flex; align-items:center; gap:8px; position:relative; z-index:1; }
+  .logo span{ color:var(--pink); }
+  .logo::before{ content:''; display:inline-block; width:10px; height:10px; background:var(--gold); transform:rotate(45deg); }
+
+  .visual-copy{ position:relative; z-index:1; }
+  .visual-copy .eyebrow{
+    font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--gold);
+    display:block; margin-bottom:16px;
+  }
+  .visual-copy h1{
+    font-family:var(--display); font-weight:400; font-size:clamp(38px,5vw,58px);
+    text-transform:uppercase; line-height:1; margin-bottom:20px;
+  }
+  .visual-copy h1 .accent{ color:var(--pink); }
+  .visual-copy p{ color:var(--bone-dim); font-size:15px; max-width:400px; line-height:1.6; }
+
+  .mini-panels{
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:3px;
+    border:2px solid var(--bone); background:var(--panel-line); margin-top:40px;
+  }
+  .mini-panel{
+    background:var(--panel); padding:16px; min-height:90px;
+    display:flex; flex-direction:column; justify-content:flex-end;
+  }
+  .mini-panel span.num{ font-family:var(--mono); font-size:11px; color:var(--pink); }
+  .mini-panel span.txt{ font-family:var(--display); font-size:15px; letter-spacing:0.5px; text-transform:uppercase; }
+
+  /* ---------- RIGHT: FORM PANEL ---------- */
+  .form-side{
+    display:flex; align-items:center; justify-content:center;
+    padding:48px 24px;
+  }
+  .form-card{ width:100%; max-width:400px; }
+  .form-tabs{
+    display:flex; border:1px solid var(--panel-line); margin-bottom:32px;
+  }
+  .form-tab{
+    flex:1; text-align:center; padding:14px; cursor:pointer;
+    font-family:var(--mono); font-size:13px; text-transform:uppercase; letter-spacing:1px;
+    color:var(--bone-dim); background:transparent; border:none; transition:all .2s ease;
+  }
+  .form-tab.active{ background:var(--pink); color:var(--ink); font-weight:700; }
+
+  .form-card h2{
+    font-family:var(--display); font-size:32px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;
+  }
+  .form-card > p{ color:var(--bone-dim); font-size:14px; margin-bottom:28px; }
+
+  .field{ margin-bottom:20px; }
+  .field label{
+    display:block; font-family:var(--mono); font-size:12px; text-transform:uppercase;
+    letter-spacing:0.5px; color:var(--bone-dim); margin-bottom:8px;
+  }
+  .field input{
+    width:100%; background:var(--panel); border:1px solid var(--panel-line);
+    color:var(--bone); font-family:var(--body); font-size:15px; padding:14px 16px;
+    outline:none; transition:border-color .2s ease;
+  }
+  .field input:focus{ border-color:var(--violet); }
+  .field input::placeholder{ color:#6d6a78; }
+
+  .form-meta{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:28px; font-size:13px;
+  }
+  .form-meta label{ display:flex; align-items:center; gap:8px; color:var(--bone-dim); cursor:pointer; }
+  .form-meta a{ color:var(--gold); }
+  .form-meta a:hover{ text-decoration:underline; }
+
+  .btn{
+    font-family:var(--body); font-weight:800; font-size:15px; padding:15px 24px;
+    border-radius:2px; border:1px solid transparent; cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease; display:inline-block;
+    width:100%; text-align:center;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{ background:var(--pink); color:var(--ink); box-shadow:4px 4px 0 var(--gold); }
+  .btn-primary:hover{ box-shadow:6px 6px 0 var(--gold); }
+
+  .divider{
+    display:flex; align-items:center; gap:14px; margin:28px 0;
+    color:var(--bone-dim); font-family:var(--mono); font-size:12px; text-transform:uppercase;
+  }
+  .divider::before, .divider::after{ content:''; flex:1; height:1px; background:var(--panel-line); }
+
+  .alt-actions{ display:flex; gap:12px; }
+  .btn-alt{
+    flex:1; background:var(--panel); border:1px solid var(--panel-line); color:var(--bone);
+    font-family:var(--body); font-weight:700; font-size:14px; padding:13px; cursor:pointer;
+    transition:border-color .2s ease;
+  }
+  .btn-alt:hover{ border-color:var(--bone); }
+
+  .switch-line{ text-align:center; margin-top:28px; font-size:14px; color:var(--bone-dim); }
+  .switch-line a{ color:var(--pink); font-weight:700; }
+  .switch-line a:hover{ text-decoration:underline; }
+
+  @media (max-width:900px){
+    .split{ grid-template-columns:1fr; }
+    .visual{ min-height:280px; }
+    .mini-panels{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="split">
+
+  <!-- LEFT VISUAL PANEL -->
+  <div class="visual">
+    <a href="index.html" class="logo">BLAQ<span>ANIME</span></a>
+
+    <div class="visual-copy">
+      <span class="eyebrow">PANEL 04 — MEMBER ACCESS</span>
+      <h1>One login.<br>Every <span class="accent">episode</span>.</h1>
+      <p>Track what you're watching, download for offline, and never lose your place mid-arc.</p>
+
+      <div class="mini-panels">
+        <div class="mini-panel"><span class="num">01</span><span class="txt">Track</span></div>
+        <div class="mini-panel"><span class="num">02</span><span class="txt">Download</span></div>
+        <div class="mini-panel"><span class="num">03</span><span class="txt">Sync</span></div>
+      </div>
+    </div>
+
+    <div></div>
+  </div>
+
+  <!-- RIGHT FORM PANEL -->
+  <div class="form-side">
+    <div class="form-card">
+      <div class="form-tabs">
+        <button class="form-tab active" id="tab-signin">Sign In</button>
+        <button class="form-tab" id="tab-signup">Join Free</button>
+      </div>
+
+      <!-- SIGN IN FORM -->
+      <div id="signin-panel">
+        <h2>Welcome back</h2>
+        <p>Pick up right where you left off.</p>
+
+        <form onsubmit="return false;">
+          <div class="field">
+            <label for="si-email">Email</label>
+            <input type="email" id="si-email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label for="si-pass">Password</label>
+            <input type="password" id="si-pass" placeholder="••••••••" required>
+          </div>
+          <div class="form-meta">
+            <label><input type="checkbox"> Remember me</label>
+            <a href="#">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+
+        <div class="divider">or continue with</div>
+        <div class="alt-actions">
+          <button class="btn-alt">Google</button>
+          <button class="btn-alt">Discord</button>
+        </div>
+
+        <p class="switch-line">New here? <a href="#" id="link-to-signup">Join free</a></p>
+      </div>
+
+      <!-- SIGN UP FORM -->
+      <div id="signup-panel" style="display:none;">
+        <h2>Create account</h2>
+        <p>Free forever. Cancel anytime — there's nothing to cancel.</p>
+
+        <form onsubmit="return false;">
+          <div class="field">
+            <label for="su-name">Display name</label>
+            <input type="text" id="su-name" placeholder="Your name" required>
+          </div>
+          <div class="field">
+            <label for="su-email">Email</label>
+            <input type="email" id="su-email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label for="su-pass">Password</label>
+            <input type="password" id="su-pass" placeholder="At least 8 characters" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Create Free Account</button>
+        </form>
+
+        <div class="divider">or continue with</div>
+        <div class="alt-actions">
+          <button class="btn-alt">Google</button>
+          <button class="btn-alt">Discord</button>
+        </div>
+
+        <p class="switch-line">Already a member? <a href="#" id="link-to-signin">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const tabSignin = document.getElementById('tab-signin');
+  const tabSignup = document.getElementById('tab-signup');
+  const signinPanel = document.getElementById('signin-panel');
+  const signupPanel = document.getElementById('signup-panel');
+
+  function showSignin(){
+    tabSignin.classList.add('active');
+    tabSignup.classList.remove('active');
+    signinPanel.style.display = 'block';
+    signupPanel.style.display = 'none';
+  }
+  function showSignup(){
+    tabSignup.classList.add('active');
+    tabSignin.classList.remove('active');
+    signupPanel.style.display = 'block';
+    signinPanel.style.display = 'none';
+  }
+
+  tabSignin.addEventListener('click', showSignin);
+  tabSignup.addEventListener('click', showSignup);
+  document.getElementById('link-to-signup').addEventListener('click', (e) => { e.preventDefault(); showSignup(); });
+  document.getElementById('link-to-signin').addEventListener('click', (e) => { e.preventDefault(); showSignin(); });
+</script>
+
+</body>
+</html>
